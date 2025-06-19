@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,11 +11,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import seeds from "@/data/seeds";
 import { Plus } from "lucide-react";
 import { useState } from "react";
-import seeds from "@/data/seeds";
+
+import { Checkbox } from "./ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -22,9 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { Checkbox } from "./ui/checkbox";
 
-// type SeedModifiers = { [key: string]: number };
 type Seed = {
   name: string;
   modifiers: { [key: string]: number };
@@ -67,7 +67,6 @@ export function PlantSeedDialog() {
           <div className="grid gap-4">
             <div className="grid w-full gap-3">
               <Label>Seed</Label>
-              {/* <Input name="seed" placeholder="Seed name" /> */}
               <Select onValueChange={handleOnChange}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a seed" />
@@ -83,8 +82,6 @@ export function PlantSeedDialog() {
             </div>
             <div className="grid gap-3">
               <Label>Modifiers</Label>
-              {/* <Input name="modifiers" placeholder="Modifiers" /> */}
-              {/* {modifiers.keys()} */}
               {seed ? (
                 Object.keys(seed.modifiers).map((modifier) => (
                   <div className="flex items-center gap-2" key={modifier}>

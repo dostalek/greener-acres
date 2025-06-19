@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -9,9 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 import { CircleFadingArrowUp } from "lucide-react";
 import { Trash2 } from "lucide-react";
+import React from "react";
 
 type Seed = {
   _id: number;

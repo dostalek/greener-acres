@@ -1,7 +1,5 @@
-import SeedTable from "@/components/SeedTable";
-// import { Button } from "@/components/ui/button";
 import { PlantSeedDialog } from "@/components/PlantSeedDialog";
-import { Card } from "@/components/ui/card";
+import SeedTable from "@/components/SeedTable";
 
 var seeds = [
   {
