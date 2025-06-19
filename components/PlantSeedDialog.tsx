@@ -36,7 +36,7 @@ type Seed = {
 export function PlantSeedDialog() {
   const [seed, setSeed] = useState<Seed>();
 
-  const handleOnChange = (selection: keyof typeof seed) => {
+  const handleOnChange = (selection: keyof typeof seeds) => {
     setSeed(seeds[selection]);
     console.log(seed);
   };
