@@ -4,6 +4,7 @@ export type SeedCardProps = {
   seedName: keyof typeof seeds;
   seedStage: "Seedling" | "Young" | "Mature" | "Elder";
   seedProgress: number;
+  seedModifiers: string[];
 };
 
 export type Seed = {
