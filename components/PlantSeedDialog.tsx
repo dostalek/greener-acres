@@ -13,10 +13,11 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import seeds from "@/data/seeds";
+import { Seed } from "@/types/seed";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
-import { Checkbox } from "./ui/checkbox";
+import { Badge } from "./ui/badge";
 import {
   Select,
   SelectContent,
@@ -25,24 +26,17 @@ import {
   SelectValue,
 } from "./ui/select";
 
-type Seed = {
-  name: string;
-  modifiers: { [key: string]: number };
-  seedlingToYoungTime: { hours: number; minutes: number };
-  youngToMatureTime: { hours: number; minutes: number };
-  matureToElderTime: { hours: number; minutes: number };
-};
-
 export function PlantSeedDialog() {
-  const [seed, setSeed] = useState<Seed>();
+  const [selectedSeed, setSelectedSeed] = useState<Seed>(null);
+  const [selectedModifiers, setselectedModifiers] = useState<string[][]>();
 
-  const handleOnChange = (selection: keyof typeof seeds) => {
-    setSeed(seeds[selection]);
-    console.log(seed);
+  const handleOnChange = (value: keyof Seed) => {
+    setSelectedSeed(seeds[value]);
+    console.log(selectedSeed);
   };
 
   const handleOnOpen = (open: boolean) => {
-    setSeed(undefined);
+    setSelectedSeed(null);
   };
 
   return (
@@ -79,19 +73,26 @@ export function PlantSeedDialog() {
                   ))}
                 </SelectContent>
               </Select>
+              {/* <DialogDescription>Select a seed</DialogDescription> */}
             </div>
             <div className="grid gap-3">
               <Label>Modifiers</Label>
-              {seed ? (
-                Object.keys(seed.modifiers).map((modifier) => (
-                  <div className="flex items-center gap-2" key={modifier}>
-                    <Checkbox />
-                    <p>{modifier}</p>
-                  </div>
-                ))
-              ) : (
-                <DialogDescription>Select a seed</DialogDescription>
-              )}
+              <div className="flex flex-wrap gap-2">
+                {selectedSeed ? (
+                  Object.keys(selectedSeed.modifiers).map((modifier) => (
+                    // <div className="flex items-center gap-2" key={modifier}>
+                    //   <Checkbox />
+                    //   <p>{modifier}</p>
+                    // </div>
+                    <Badge key={modifier} variant="outline" asChild>
+                      <button className="cursor-pointer">{modifier}</button>
+                    </Badge>
+                  ))
+                ) : (
+                  <></>
+                )}
+              </div>
+              {/* <DialogDescription>Select modifiers</DialogDescription> */}
             </div>
           </div>
           <DialogFooter>
