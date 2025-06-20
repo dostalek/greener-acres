@@ -1,4 +1,4 @@
-# Greener Acres
+# Greener Acres (WIP)
 
 This project aims to help users manage their Wizard101 gardens by providing timely notifications of when to harvest.
 
