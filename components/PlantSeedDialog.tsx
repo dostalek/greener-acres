@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import seeds from "@/data/seeds";
 import { Seed } from "@/types/seed";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 
 import { Badge } from "./ui/badge";
 import {
@@ -28,15 +28,26 @@ import {
 
 export function PlantSeedDialog() {
   const [selectedSeed, setSelectedSeed] = useState<Seed>(null);
-  const [selectedModifiers, setselectedModifiers] = useState<string[][]>();
+  const [selectedModifiers, setSelectedModifiers] = useState<Set<string>>();
 
   const handleOnChange = (value: keyof Seed) => {
+    setSelectedModifiers(new Set());
     setSelectedSeed(seeds[value]);
-    console.log(selectedSeed);
   };
 
   const handleOnOpen = (open: boolean) => {
-    setSelectedSeed(null);
+    // Wait for dialog to fully close before resetting selected seed
+    setTimeout(() => setSelectedSeed(null), 200);
+  };
+
+  const handleOnClick = (modifier: string) => {
+    const selected = new Set(selectedModifiers);
+    if (selected.has(modifier)) {
+      selected.delete(modifier);
+    } else {
+      selected.add(modifier);
+    }
+    setSelectedModifiers(selected);
   };
 
   return (
@@ -52,7 +63,7 @@ export function PlantSeedDialog() {
         </div>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Plant seed</DialogTitle>
+            <DialogTitle>Plant a new seed</DialogTitle>
             <DialogDescription>
               Select a seed and its modifiers. Click plant when you&apos;re
               done.
@@ -73,33 +84,36 @@ export function PlantSeedDialog() {
                   ))}
                 </SelectContent>
               </Select>
-              {/* <DialogDescription>Select a seed</DialogDescription> */}
             </div>
-            <div className="grid gap-3">
-              <Label>Modifiers</Label>
-              <div className="flex flex-wrap gap-2">
-                {selectedSeed ? (
-                  Object.keys(selectedSeed.modifiers).map((modifier) => (
-                    // <div className="flex items-center gap-2" key={modifier}>
-                    //   <Checkbox />
-                    //   <p>{modifier}</p>
-                    // </div>
-                    <Badge key={modifier} variant="outline" asChild>
-                      <button className="cursor-pointer">{modifier}</button>
+            {!selectedSeed ? (
+              <></>
+            ) : (
+              <div className="grid gap-3">
+                <Label>Modifiers</Label>
+                <div className="flex flex-wrap gap-2">
+                  {Object.keys(selectedSeed.modifiers).map((modifier) => (
+                    <Badge
+                      key={modifier}
+                      onClick={() => handleOnClick(modifier)}
+                      variant={
+                        selectedModifiers?.has(modifier) ? "default" : "outline"
+                      }
+                      className="cursor-pointer select-none"
+                    >
+                      {modifier}
                     </Badge>
-                  ))
-                ) : (
-                  <></>
-                )}
+                  ))}
+                </div>
               </div>
-              {/* <DialogDescription>Select modifiers</DialogDescription> */}
-            </div>
+            )}
           </div>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Plant seed</Button>
+            <Button disabled={!selectedSeed} type="submit">
+              Plant seed
+            </Button>
           </DialogFooter>
         </DialogContent>
       </form>
