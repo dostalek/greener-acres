@@ -3,24 +3,39 @@
 import { PlantSeedDialog } from "@/components/PlantSeedDialog";
 import SeedCard from "@/components/SeedCard";
 import { SeedCardProps } from "@/types/seed";
+import { SeedData } from "@/types/seed";
 import { useState } from "react";
 
 export default function Home() {
-  const [seedCards, setSeedCards] = useState<SeedCardProps[]>();
+  const [seedCards, setSeedCards] = useState<SeedData[]>([]);
 
-  const handlePlantSeed = () => {};
+  const onAddSeed = ({ seedName, seedStage, seedProgress }: SeedCardProps) => {
+    setSeedCards((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        seedName: seedName,
+        seedStage: seedStage,
+        seedProgress: seedProgress,
+      },
+    ]);
+  };
 
   return (
-    <div className="p-4 w-1/2 mx-auto">
-      <PlantSeedDialog />
-      <div className="flex justify-end"></div>
-      <div className="pt-4">
-        <SeedCard
-          seedName="Couch Potatoes"
-          seedStage="Seedling"
-          seedProgress={33}
-          seedModifiers={["Placeholder"]}
-        />
+    <div className="p-4">
+      <div className="w-[1200px] mx-auto">
+        <PlantSeedDialog onAddSeed={onAddSeed} />
+        <div className="flex flex-wrap gap-3">
+          {seedCards.map((seedCard, index) => (
+            <SeedCard
+              key={index}
+              seedName={seedCard.seedName}
+              seedStage={seedCard.seedStage}
+              seedProgress={seedCard.seedProgress}
+              // seedModifiers={["Placeholder"]}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
