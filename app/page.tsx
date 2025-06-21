@@ -24,7 +24,9 @@ export default function Home() {
   return (
     <div className="p-4">
       <div className="w-[1200px] mx-auto">
-        <PlantSeedDialog onAddSeed={onAddSeed} />
+        <div className="pb-4">
+          <PlantSeedDialog onAddSeed={onAddSeed} />
+        </div>
         <div className="flex flex-wrap gap-3">
           {seedCards.map((seedCard) => (
             <SeedCard
