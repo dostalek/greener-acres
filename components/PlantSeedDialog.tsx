@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import seeds from "@/data/seeds";
-import { Seed } from "@/types/seed";
+import { Seed, SeedCardProps } from "@/types/seed";
 import { Plus } from "lucide-react";
 import { MouseEventHandler, useState } from "react";
 
@@ -26,7 +26,11 @@ import {
   SelectValue,
 } from "./ui/select";
 
-export function PlantSeedDialog() {
+type PlantSeedDialogProps = {
+  onAddSeed: ({ seedName, seedStage, seedProgress }: SeedCardProps) => void;
+};
+
+export function PlantSeedDialog({ onAddSeed }: PlantSeedDialogProps) {
   const [selectedSeed, setSelectedSeed] = useState<Seed>(null);
   const [selectedModifiers, setSelectedModifiers] = useState<Set<string>>();
 
@@ -99,8 +103,10 @@ export function PlantSeedDialog() {
                         selectedModifiers?.has(modifier) ? "default" : "outline"
                       }
                       className="cursor-pointer select-none"
+                      asChild
                     >
-                      {modifier}
+                      {/* Wrapping a button so it can be selected by pressing TAB, ENTER */}
+                      <button>{modifier}</button>
                     </Badge>
                   ))}
                 </div>
@@ -111,9 +117,23 @@ export function PlantSeedDialog() {
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button disabled={!selectedSeed} type="submit">
-              Plant seed
-            </Button>
+            <DialogClose asChild>
+              <Button
+                disabled={!selectedSeed}
+                type="submit"
+                onClick={() =>
+                  selectedSeed
+                    ? onAddSeed({
+                        seedName: selectedSeed.name,
+                        seedStage: "Seedling",
+                        seedProgress: 33,
+                      })
+                    : console.log("No seed selected")
+                }
+              >
+                Plant seed
+              </Button>
+            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </form>
