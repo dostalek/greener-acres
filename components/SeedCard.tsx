@@ -7,7 +7,7 @@ import React from "react";
 
 const SeedCard = ({ seedName, seedStage, seedProgress }: SeedCardProps) => {
   return (
-    <Card className="w-65">
+    <Card className="w-[291px]">
       <CardHeader>
         <div className="flex justify-between items-baseline">
           <CardTitle className="pb-3">{seedName}</CardTitle>
