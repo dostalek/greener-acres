@@ -21,7 +21,9 @@ import { Badge } from "./ui/badge";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
@@ -80,13 +82,16 @@ export function PlantSeedDialog({ onAddSeed }: PlantSeedDialogProps) {
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a seed" />
                 </SelectTrigger>
-                <SelectContent>
-                  {Object.keys(seeds).map((seedName) => (
-                    <SelectItem key={seedName} value={seedName}>
-                      {seedName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
+                <SelectGroup>
+                  <SelectContent>
+                    <SelectLabel>Seeds</SelectLabel>
+                    {Object.keys(seeds).map((seedName) => (
+                      <SelectItem key={seedName} value={seedName}>
+                        {seedName}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </SelectGroup>
               </Select>
             </div>
             {!selectedSeed ? (
