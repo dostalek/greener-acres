@@ -26,9 +26,9 @@ export default function Home() {
       <div className="w-[1200px] mx-auto">
         <PlantSeedDialog onAddSeed={onAddSeed} />
         <div className="flex flex-wrap gap-3">
-          {seedCards.map((seedCard, index) => (
+          {seedCards.map((seedCard) => (
             <SeedCard
-              key={index}
+              key={seedCard.id}
               seedName={seedCard.seedName}
               seedStage={seedCard.seedStage}
               seedProgress={seedCard.seedProgress}
